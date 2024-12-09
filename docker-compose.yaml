@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: pixelart
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 82363newlife
+  app:
+    image: surofu/pixelart
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_URL: jdbc:postgresql://db:5432/pixelart
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 82363newlife
