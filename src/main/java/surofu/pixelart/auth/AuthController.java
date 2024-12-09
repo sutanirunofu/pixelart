@@ -3,9 +3,7 @@ package surofu.pixelart.auth;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,14 +12,12 @@ import surofu.pixelart.exception.BadRequestExceptionRTO;
 import surofu.pixelart.savedArt.FindSavedArtRTO;
 import surofu.pixelart.savedArt.SavedArtService;
 import surofu.pixelart.savedArt.UpdateSavedArtDTO;
-import surofu.pixelart.user.FindUserRTO;
 import surofu.pixelart.user.UserNotFoundException;
 import surofu.pixelart.user.UserService;
 import surofu.pixelart.utils.JwtUtils;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
