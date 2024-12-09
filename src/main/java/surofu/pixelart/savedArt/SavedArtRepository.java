@@ -18,4 +18,7 @@ public interface SavedArtRepository extends JpaRepository<SavedArt, Long> {
     @Transactional
     @Query("UPDATE SavedArt art SET art.map = :#{#dto.map}, art.isComplete = :#{#dto.isComplete}, art.lastModified = :zonedDateTime WHERE art.id = :id")
     void updateById(Long id, @Param("dto") UpdateSavedArtDTO updateSavedArtDTO, ZonedDateTime zonedDateTime);
+
+    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN TRUE ELSE FALSE END FROM SavedArt s WHERE s.art.id = :id")
+    boolean existsByArtId(@Param("id") Long id);
 }

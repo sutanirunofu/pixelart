@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import surofu.pixelart.user.User;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 
 @Entity
 @Data
@@ -31,14 +29,6 @@ public class Art implements Serializable {
 
     @Column(name = "colors", nullable = false)
     private String colors;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "stars",
-            joinColumns = @JoinColumn(name = "art_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Collection<User> stars;
 
     @Column(name = "publication_date", nullable = false)
     private ZonedDateTime publicationDate;

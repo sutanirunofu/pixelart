@@ -17,9 +17,4 @@ public class ArtServiceImpl implements ArtService {
     public List<FindArtRTO> findAll() {
         return repository.findAll().stream().map(serializer::artToFind).toList();
     }
-
-    @Override
-    public List<FindArtRTO> findWithStar(Long userId) {
-        return repository.findWithStar(userId).stream().map(serializer::artToFind).toList();
-    }
 }

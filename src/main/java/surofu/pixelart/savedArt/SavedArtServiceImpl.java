@@ -3,6 +3,7 @@ package surofu.pixelart.savedArt;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import surofu.pixelart.art.*;
 import surofu.pixelart.user.*;
 
 import java.time.ZonedDateTime;
@@ -16,10 +17,14 @@ public class SavedArtServiceImpl implements SavedArtService {
     private final SavedArtSerializer serializer;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final ArtRepository artRepository;
 
     @Override
-    public List<FindSavedArtRTO> findAll() {
-        return repository.findAll().stream().map(serializer::artToFind).toList();
+    public boolean isUserOwnedArt(String username, Long savedArtId) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) throw new UserNotFoundException(username);
+        List<SavedArt> arts = user.get().getSavedArts().stream().filter(art -> art.getId().equals(savedArtId)).toList();
+        return !arts.isEmpty();
     }
 
     @Override
@@ -30,16 +35,21 @@ public class SavedArtServiceImpl implements SavedArtService {
     }
 
     @Override
-    public List<FindSavedArtRTO> findUncompleted() {
-        return List.of();
-    }
+    public void save(Long id, String username) throws ArtNotFoundException, UserNotFoundException {
+        Art art = artRepository.findById(id).orElseThrow(() -> new ArtNotFoundException(id));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
 
-    @Override
-    public boolean isUserOwnedArt(String username, Long savedArtId) {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) throw new UserNotFoundException(username);
-        List<SavedArt> arts = user.get().getSavedArts().stream().filter(art -> art.getId().equals(savedArtId)).toList();
-        return !arts.isEmpty();
+        boolean existsByArtId = repository.existsByArtId(id);
+        if (existsByArtId) return;
+
+        SavedArt savedArt = new SavedArt();
+        savedArt.setArt(art);
+        savedArt.setUser(user);
+        savedArt.setMap(null);
+        savedArt.setIsComplete(false);
+        savedArt.setLastModified(ZonedDateTime.now());
+
+        repository.save(savedArt);
     }
 
     @Override

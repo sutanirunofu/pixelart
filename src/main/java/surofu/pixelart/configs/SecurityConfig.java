@@ -25,7 +25,7 @@ import surofu.pixelart.user.UserService;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final String[] FULL_WHITE_LIST = {
-            "/api/v1/auth/**"
+            "/api/v1/auth/**",
     };
 
     private final String[] READ_WHITE_LIST = {
@@ -33,7 +33,7 @@ public class SecurityConfig {
     };
 
     private final String[] FULL_AUTHORIZED_LIST = {
-
+            "/api/v1/saved_arts/**",
     };
 
     private final String[] WRITE_AUTHORIZED_LIST = {
@@ -42,7 +42,6 @@ public class SecurityConfig {
 
     private final String[] ADMIN_LIST = {
             "/api/v1/arts/**",
-            "/api/v1/saved_arts/**",
             "/api/v1/users/**",
     };
 
@@ -72,7 +71,7 @@ public class SecurityConfig {
                         .requestMatchers(WRITE_AUTHORIZED_LIST).hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers(ADMIN_LIST).hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .anyRequest().hasRole("ADMIN")
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

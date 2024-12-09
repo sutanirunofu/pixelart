@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import surofu.pixelart.art.Art;
 import surofu.pixelart.role.Role;
 import surofu.pixelart.savedArt.SavedArt;
 
@@ -41,14 +40,6 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "art_id")
     )
     private Collection<SavedArt> savedArts;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "stars",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "art_id")
-    )
-    private Collection<Art> stars;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "id")

@@ -9,15 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import surofu.pixelart.exception.BadRequestExceptionRTO;
-import surofu.pixelart.savedArt.FindSavedArtRTO;
 import surofu.pixelart.savedArt.SavedArtService;
-import surofu.pixelart.savedArt.UpdateSavedArtDTO;
-import surofu.pixelart.user.UserNotFoundException;
 import surofu.pixelart.user.UserService;
 import surofu.pixelart.utils.JwtUtils;
-
-import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +28,8 @@ public class AuthController {
             return new ResponseEntity<>(authService.signup(signupDTO), HttpStatus.OK);
         } catch (AuthException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatus());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -67,31 +63,6 @@ public class AuthController {
             return new ResponseEntity<>(new BadRequestExceptionRTO("Jwt bad signature", e.getMessage()), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             return new ResponseEntity<>(new BadRequestExceptionRTO("Jwt could not be parsed", e.getMessage()), HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-    @GetMapping("/saved_arts")
-    public ResponseEntity<?> findAllSavedArts(Principal principal) {
-        try {
-            System.out.println(principal.getName());
-            List<FindSavedArtRTO> arts = savedArtService.findAllByUsername(principal.getName());
-            return new ResponseEntity<>(arts, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PatchMapping("/saved_arts/{id}")
-    public ResponseEntity<?> updateById(Principal principal, @PathVariable Long id, @RequestBody UpdateSavedArtDTO updateSavedArtDTO) {
-        try {
-            boolean isUserOwnedArt = savedArtService.isUserOwnedArt(principal.getName(), id);
-            if (!isUserOwnedArt) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            savedArtService.updateById(id, updateSavedArtDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<>(new BadRequestExceptionRTO("User not found", e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

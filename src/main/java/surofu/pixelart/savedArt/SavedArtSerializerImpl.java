@@ -23,17 +23,6 @@ public class SavedArtSerializerImpl implements SavedArtSerializer {
     }
 
     @Override
-    public FindSavedArtWithUserRTO artToFindWithUser(SavedArt art) {
-        return FindSavedArtWithUserRTO.builder()
-                .id(art.getId())
-                .art(artSerializer.artToFind(art.getArt()))
-                .user(userSerializer.userToFind(art.getUser()))
-                .isComplete(art.getIsComplete())
-                .lastModified(art.getLastModified())
-                .build();
-    }
-
-    @Override
     public UpdateSavedArtDTO compareUpdateWithArt(UpdateSavedArtDTO updateSavedArtDTO, SavedArt savedArt) {
         if (updateSavedArtDTO.getMap() == null) {
             updateSavedArtDTO.setMap(savedArt.getMap());

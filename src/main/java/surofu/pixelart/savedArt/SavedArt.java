@@ -27,7 +27,7 @@ public class SavedArt implements Serializable {
     @JoinColumn(name = "art_id")
     private Art art;
 
-    @Column(name = "map", nullable = false)
+    @Column(name = "map")
     private String map;
 
     @ManyToOne(fetch = FetchType.LAZY)

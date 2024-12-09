@@ -42,12 +42,3 @@ CREATE TABLE IF NOT EXISTS users_saved_arts (
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (art_id) REFERENCES arts (id)
 );
-
-CREATE TABLE IF NOT EXISTS stars (
-    art_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-
-    PRIMARY KEY (art_id, user_id),
-    FOREIGN KEY (art_id) REFERENCES arts (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
-);
