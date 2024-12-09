@@ -16,6 +16,7 @@ public class SavedArtSerializerImpl implements SavedArtSerializer {
         return FindSavedArtRTO.builder()
                 .id(art.getId())
                 .art(artSerializer.artToFind(art.getArt()))
+                .map(art.getMap())
                 .isComplete(art.getIsComplete())
                 .lastModified(art.getLastModified())
                 .build();
@@ -30,5 +31,18 @@ public class SavedArtSerializerImpl implements SavedArtSerializer {
                 .isComplete(art.getIsComplete())
                 .lastModified(art.getLastModified())
                 .build();
+    }
+
+    @Override
+    public UpdateSavedArtDTO compareUpdateWithArt(UpdateSavedArtDTO updateSavedArtDTO, SavedArt savedArt) {
+        if (updateSavedArtDTO.getMap() == null) {
+            updateSavedArtDTO.setMap(savedArt.getMap());
+        }
+
+        if (updateSavedArtDTO.getIsComplete() == null) {
+            updateSavedArtDTO.setIsComplete(savedArt.getIsComplete());
+        }
+
+        return updateSavedArtDTO;
     }
 }
