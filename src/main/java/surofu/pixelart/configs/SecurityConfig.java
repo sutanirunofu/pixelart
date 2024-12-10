@@ -26,6 +26,8 @@ import surofu.pixelart.user.UserService;
 public class SecurityConfig {
     private final String[] FULL_WHITE_LIST = {
             "/api/v1/auth/**",
+            "/api",
+            "/api/v1",
     };
 
     private final String[] READ_WHITE_LIST = {
@@ -71,7 +73,7 @@ public class SecurityConfig {
                         .requestMatchers(WRITE_AUTHORIZED_LIST).hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers(ADMIN_LIST).hasRole("ADMIN")
-                        .anyRequest().hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

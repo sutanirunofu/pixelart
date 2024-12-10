@@ -22,6 +22,11 @@ public class AuthController {
     private final SavedArtService savedArtService;
     private final JwtUtils jwtUtils;
 
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        return ResponseEntity.ok("Use next endpoints: /signup or /login");
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupDTO signupDTO) {
         try {

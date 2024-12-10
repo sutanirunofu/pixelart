@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
 
     @Override
-    public SignupRTO signup(SignupDTO signupDTO) throws AuthException, Exception {
+    public SignupRTO signup(SignupDTO signupDTO) throws Exception {
         Optional<User> candidate = userRepository.findByUsername(signupDTO.getUsername());
 
         if (candidate.isPresent())

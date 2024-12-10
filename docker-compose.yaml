@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 82363newlife
   app:
-    image: surofu/pixelart
+    image: sutanisurofu/pixelart
     ports:
       - "8080:8080"
     depends_on:
@@ -17,3 +17,4 @@ services:
       POSTGRES_URL: jdbc:postgresql://db:5432/pixelart
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 82363newlife
+      JWT_SECRET: KQDCCZEPL72YXXZX9I7JJ8QQ6B85IG56A2ARRU941PHTI3G1AI773FRL40R89B3A

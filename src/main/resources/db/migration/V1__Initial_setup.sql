@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS arts (
 CREATE TABLE IF NOT EXISTS saved_arts (
     id BIGINT NOT NULL,
     map TEXT NOT NULL,
+    is_complete BOOLEAN NOT NULL,    
     last_modified TIMESTAMP WITH TIME ZONE NOT NULL,
-    is_complete BOOLEAN NOT NULL,
 
     PRIMARY KEY (id)
 );

@@ -9,13 +9,13 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
+      ddl-auto: validate
+    defer-datasource-initialization: false
   sql:
     init:
-      mode: always
+      mode: never
   flyway:
-    enabled: false
+    enabled: true
     baseline-on-migrate: true
     baseline-description: "init"
     baseline-version: 0
