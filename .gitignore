@@ -7,7 +7,7 @@ target/
 ### Secrets ###
 .env
 Dockerfile
-docker-compose.yaml
+docker-*.yaml
 
 ### STS ###
 .apt_generated
