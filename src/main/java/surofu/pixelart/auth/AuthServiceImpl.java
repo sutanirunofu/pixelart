@@ -65,6 +65,8 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtUtils.generateAccessToken(userDetails);
         String refreshToken = jwtUtils.generateRefreshToken(userDetails);
 
-        return new LoginRTO(accessToken, refreshToken);
+        TokensDTO tokens = new TokensDTO(accessToken, refreshToken);
+
+        return new LoginRTO(tokens, userSerializer.userToFind(candidate.get()));
     }
 }
