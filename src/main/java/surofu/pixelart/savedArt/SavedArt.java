@@ -34,7 +34,7 @@ public class SavedArt implements Serializable {
     @Column(name = "map", columnDefinition = "TEXT")
     private String map;
 
-    @Column(name = "is_complete", nullable = false)
+    @Column(name = "is_complete", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isComplete;
 
     @Column(name = "modified_date", nullable = false)
