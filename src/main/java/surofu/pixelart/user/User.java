@@ -42,16 +42,8 @@ public class User implements Serializable {
     )
     private Collection<SavedArt> savedArts;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "stars",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "art_id")
-    )
-    private Collection<Art> stars;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @Column(name = "registration_date", nullable = false)

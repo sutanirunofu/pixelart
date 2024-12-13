@@ -26,19 +26,11 @@ public class Art implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "map", nullable = false)
+    @Column(name = "map", columnDefinition = "TEXT", nullable = false)
     private String map;
 
-    @Column(name = "colors", nullable = false)
+    @Column(name = "colors", columnDefinition = "TEXT", nullable = false)
     private String colors;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "stars",
-            joinColumns = @JoinColumn(name = "art_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Collection<User> stars;
 
     @Column(name = "publication_date", nullable = false)
     private ZonedDateTime publicationDate;
