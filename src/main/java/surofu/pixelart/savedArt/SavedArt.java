@@ -24,12 +24,12 @@ public class SavedArt implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "art_id")
-    private Art art;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "art_id")
+    private Art art;
 
     @Column(name = "map", columnDefinition = "TEXT")
     private String map;
