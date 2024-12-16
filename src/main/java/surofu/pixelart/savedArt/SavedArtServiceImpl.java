@@ -8,7 +8,6 @@ import surofu.pixelart.user.UserNotFoundException;
 import surofu.pixelart.user.UserRepository;
 
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

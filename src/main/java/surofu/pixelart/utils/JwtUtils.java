@@ -38,7 +38,7 @@ public class JwtUtils {
         return this.generateTokenWithExpiresDate(userDetails, this.refreshLifetime);
     }
 
-    public String getUsername(String token) throws ExpiredJwtException, SignatureException, Exception {
+    public String getUsername(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
 

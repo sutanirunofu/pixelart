@@ -5,13 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import surofu.pixelart.art.Art;
 import surofu.pixelart.role.Role;
-import surofu.pixelart.savedArt.SavedArt;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 
 @Entity
 @Data

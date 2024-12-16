@@ -1,7 +1,11 @@
 package surofu.pixelart.auth;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+@Getter
+@Setter
 public class AuthException extends Exception {
     private HttpStatus status;
 
@@ -15,11 +19,4 @@ public class AuthException extends Exception {
         this.status = status;
     }
 
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
 }
