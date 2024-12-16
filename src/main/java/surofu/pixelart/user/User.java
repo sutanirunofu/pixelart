@@ -34,14 +34,6 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_saved_arts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "art_id")
-    )
-    private Collection<SavedArt> savedArts;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;

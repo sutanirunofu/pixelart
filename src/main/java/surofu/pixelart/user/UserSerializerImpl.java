@@ -14,7 +14,7 @@ public class UserSerializerImpl implements UserSerializer {
                 .id(user.getId())
                 .firstname(user.getFirstname())
                 .username(user.getUsername().toLowerCase())
-                .role(user.getRole().getName())
+                .role(user.getRole().getName().split("_")[1])
                 .registrationDate(user.getRegistrationDate())
                 .build();
     }

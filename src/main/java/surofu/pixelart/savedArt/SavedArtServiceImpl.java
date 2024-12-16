@@ -26,8 +26,8 @@ public class SavedArtServiceImpl implements SavedArtService {
     }
 
     @Override
-    public Optional<FindSavedArtRTO> findById(Long artId) {
-        return repository.findById(artId).map(serializer::artToFind);
+    public Optional<FindSavedArtRTO> findById(String username, Long artId) {
+        return repository.findByUsernameAndArtId(username, artId).map(serializer::artToFind);
     }
 
     @Override

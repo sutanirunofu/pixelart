@@ -9,6 +9,7 @@ import surofu.pixelart.user.UserNotFoundException;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +22,23 @@ public class SavedArtController {
         try {
             List<FindSavedArtRTO> arts = service.findAll(principal.getName());
             return new ResponseEntity<>(arts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(Principal principal, @PathVariable long id) {
+        try {
+            Optional<FindSavedArtRTO> art = service.findById(principal.getName(), id);
+
+            if (art.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(art.get(), HttpStatus.OK);
+        } catch (SavedArtNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

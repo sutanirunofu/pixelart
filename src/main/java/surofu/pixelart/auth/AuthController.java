@@ -59,7 +59,7 @@ public class AuthController {
 
     @PostMapping("/update_access_token")
     public ResponseEntity<?> updateAccessToken(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader("Authorization"); 
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return new ResponseEntity<>(new BadRequestExceptionRTO("Jwt bad signature"), HttpStatus.BAD_REQUEST);

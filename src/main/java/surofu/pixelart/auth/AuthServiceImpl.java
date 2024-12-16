@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import surofu.pixelart.role.Role;
-import surofu.pixelart.role.RoleService;
+import surofu.pixelart.role.RoleRepository;
 import surofu.pixelart.user.User;
 import surofu.pixelart.user.UserRepository;
 import surofu.pixelart.user.UserSerializer;
@@ -24,13 +24,16 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final UserSerializer userSerializer;
-    private final RoleService roleService;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
     @Override
     public SignupRTO signup(SignupDTO signupDTO) throws AuthException {
+        signupDTO.setUsername(signupDTO.getUsername().toLowerCase().trim());
+        signupDTO.setPassword(signupDTO.getPassword().trim());
+
         Optional<User> candidate = userRepository.findByUsername(signupDTO.getUsername());
 
         if (candidate.isPresent())
@@ -40,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
             );
 
         User user = userSerializer.signupToUser(signupDTO);
-        Role role = roleService.findRoleByName("ROLE_USER").orElseThrow();
+        Role role = roleRepository.findByName("ROLE_USER").orElseThrow();
 
         user.setRole(role);
         user.setPassword(encoder.encode(signupDTO.getPassword()));
@@ -52,6 +55,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginRTO login(LoginDTO loginDTO) throws AuthException {
+        loginDTO.setUsername(loginDTO.getUsername().toLowerCase().trim());
+        loginDTO.setPassword(loginDTO.getPassword().trim());
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         } catch (BadCredentialsException e) {

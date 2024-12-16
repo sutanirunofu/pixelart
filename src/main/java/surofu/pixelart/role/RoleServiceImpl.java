@@ -9,9 +9,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository repository;
+    private final RoleSerializer serializer;
 
     @Override
-    public Optional<Role> findRoleByName(String name) {
-        return repository.findByName(name);
+    public Optional<FindRoleRTO> findRoleByName(String name) {
+        Optional<Role> role = repository.findByName(name);
+        return role.map(serializer::roleToFind);
     }
 }
