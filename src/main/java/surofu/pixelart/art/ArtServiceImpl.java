@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Primary
 @Service
@@ -16,5 +17,10 @@ public class ArtServiceImpl implements ArtService {
     @Override
     public List<FindArtRTO> findAll() {
         return repository.findAll().stream().map(serializer::artToFind).toList();
+    }
+
+    @Override
+    public Optional<FindArtRTO> findById(Long id) {
+        return repository.findById(id).map(serializer::artToFind);
     }
 }

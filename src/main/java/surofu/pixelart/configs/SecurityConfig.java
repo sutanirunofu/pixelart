@@ -33,7 +33,7 @@ public class SecurityConfig {
     };
 
     private final String[] FULL_AUTHORIZED_LIST = {
-
+            "/api/v1/saved_arts/**",
     };
 
     private final String[] WRITE_AUTHORIZED_LIST = {
@@ -42,7 +42,6 @@ public class SecurityConfig {
 
     private final String[] ADMIN_LIST = {
             "/api/v1/arts/**",
-            "/api/v1/saved_arts/**",
             "/api/v1/users/**",
     };
 

@@ -5,13 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import surofu.pixelart.art.Art;
 import surofu.pixelart.role.Role;
-import surofu.pixelart.savedArt.SavedArt;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Collection;
 
 @Entity
 @Data
@@ -33,14 +30,6 @@ public class User implements Serializable {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @ManyToMany
-    @JoinTable(
-            name = "users_saved_arts",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "art_id")
-    )
-    private Collection<SavedArt> savedArts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")

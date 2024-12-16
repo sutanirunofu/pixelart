@@ -60,6 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 UserDetails userDetails = userService.loadUserByUsername(username);
                 accessToken = jwtUtils.generateAccessToken(userDetails);
+                response.addHeader("Access-Control-Expose-Headers", "Authorization");
                 response.addHeader("Authorization", "Bearer " + accessToken);
             } catch (UsernameNotFoundException e) {
                 log.debug("Username not found: {}", e.getMessage());
