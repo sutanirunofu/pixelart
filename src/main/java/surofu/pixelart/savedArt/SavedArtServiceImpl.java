@@ -44,7 +44,7 @@ public class SavedArtServiceImpl implements SavedArtService {
 
     @Override
     public FindSavedArtRTO updateByArtId(String username, Long artId, UpdateSavedArtDTO updateSavedArtDTO) throws SavedArtNotFoundException {
-        SavedArt art = repository.findById(artId).orElseThrow(() -> new SavedArtNotFoundException(artId));
+        SavedArt art = repository.findByUsernameAndArtId(username, artId).orElseThrow(() -> new SavedArtNotFoundException(artId));
         art = serializer.compareArtWithUpdate(art, updateSavedArtDTO);
         repository.save(art);
         return serializer.artToFind(art);
