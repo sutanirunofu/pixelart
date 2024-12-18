@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import surofu.pixelart.filters.JwtFilter;
 import surofu.pixelart.user.UserService;
 
@@ -46,16 +46,15 @@ public class SecurityConfig {
     };
 
     private final UserService userService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(request ->
-                        new CorsConfiguration().applyPermitDefaultValues()
-                ))
-                .headers(httpSecurityHeadersConfigurer ->
-                        httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
+                .headers(headersConfigurer ->
+                        headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -66,10 +65,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(FULL_WHITE_LIST).permitAll()
                         .requestMatchers(READ_WHITE_LIST).permitAll()
-
                         .requestMatchers(FULL_AUTHORIZED_LIST).hasAnyRole("USER", "ADMIN")
                         .requestMatchers(WRITE_AUTHORIZED_LIST).hasAnyRole("USER", "ADMIN")
-
                         .requestMatchers(ADMIN_LIST).hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
