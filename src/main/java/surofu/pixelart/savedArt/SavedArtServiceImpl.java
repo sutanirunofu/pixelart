@@ -30,7 +30,13 @@ public class SavedArtServiceImpl implements SavedArtService {
     }
 
     @Override
-    public void save(String username, Long artId) throws UserNotFoundException, ArtNotFoundException {
+    public void save(String username, Long artId) throws UserNotFoundException, ArtNotFoundException, SavedArtAlreadyExistsException {
+        Optional<FindSavedArtRTO> candidate = findById(username, artId);
+
+        if (candidate.isPresent()) {
+            throw new SavedArtAlreadyExistsException(artId);
+        }
+
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
         Art art = artRepository.findById(artId).orElseThrow(() -> new ArtNotFoundException(artId));
 
