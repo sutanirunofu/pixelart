@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfigurationSource;
 import surofu.pixelart.filters.JwtFilter;
 import surofu.pixelart.user.UserService;
@@ -52,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
-                .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource))
                 .headers(headersConfigurer ->
                         headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
