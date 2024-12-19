@@ -7,7 +7,7 @@ spring:
     password: ${POSTGRES_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: validate
     defer-datasource-initialization: false
